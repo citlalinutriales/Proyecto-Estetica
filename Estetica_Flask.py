@@ -19,9 +19,29 @@ app = Flask(__name__, template_folder="templates")
 def index():
     return render_template('index.html')
     
-@app.route('/Inventario',)
+@app.route('/Inventario', methods=['GET','POST'])
 def inventario():
-    return render_template('inventario_form.html')
+
+    if request.method == "GET":
+       return render_template('inventario_form.html')
+
+    else:
+        Marca_Producto = request.form['Marca_Producto']
+        Modelo_Producto = request.form['Modelo_Producto']
+        Costo_Producto = request.form['Costo_Producto']
+        Existencias = request.form['Existencias']
+
+        try:
+            with connection.cursor() as cursor:
+                # Agregar un nuevo Usuario
+                cursor.execute("INSERT INTO Inventario2 (Marca_Producto, Modelo_Producto, Costo_Producto, Existencias) VALUES (%s,%s,%s,%s)",(Marca_Producto, Modelo_Producto, Costo_Producto, Existencias))
+
+            # Conexion a la BD para Registro
+            connection.commit()
+        finally:
+            print("Se Guardo")
+
+        return render_template("index.html")     
 
 @app.route('/Ventas',)
 def ventas():
