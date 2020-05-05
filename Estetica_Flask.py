@@ -3,8 +3,6 @@ from flask import render_template, request, redirect, url_for
 
 import pymysql.cursors
 
-
-
 app = Flask(__name__, template_folder="templates")
     
 @app.route('/index')
@@ -22,9 +20,6 @@ def inventario():
         Marca_Producto = request.form['Marca_Producto']
         Modelo_Producto = request.form['Modelo_Producto']
         Costo_Producto = request.form['Costo_Producto']
-
-        finally:
-            print("Se Guardo")
         return render_template("index.html")     
 
 @app.route('/Ventas',)
